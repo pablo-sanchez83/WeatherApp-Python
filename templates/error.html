@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            border: 1px solid #f5c6cb;
+            background-color: #f1b0b7;
+            border-radius: 5px;
+            padding: 20px;
+            display: inline-block;
+        }
+        .container h1 {
+            font-size: 24px;
+        }
+        .container p {
+            font-size: 18px;
+        }
+        .btn {
+            background-color: #721c24;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #501217;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ocurrió un Error</h1>
+        <p>{{ mensaje }}</p>
+        <a href="/" class="btn">Volver a la Página Principal</a>
+    </div>
+</body>
+</html>

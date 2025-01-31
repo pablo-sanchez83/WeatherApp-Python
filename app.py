@@ -17,18 +17,20 @@ def insertar_paises():
         return render_template("success.html", mensaje="Países insertados correctamente.")
     return render_template("error.html", mensaje="Los países ya han sido insertados.")
 
-@app.route("/insertar_fronteras", methods=["POST"])
-def insertar_fronteras():
-    lista_paises = weather_data.extraer_paises()
-    if db_manager.insertar_fronteras(lista_paises):
-        return render_template("success.html", mensaje="Fronteras insertadas correctamente.")
-    return render_template("error.html", mensaje="Las fronteras ya han sido insertadas.")
-
 @app.route("/insertar_temperaturas", methods=["POST"])
 def insertar_temperaturas():
     lista_paises = weather_data.extraer_paises()
     db_manager.insertar_temperaturas(lista_paises)
     return render_template("success.html", mensaje="Temperaturas insertadas correctamente.")
+
+@app.route("/buscar_pais", methods=["POST"])
+def buscar_pais():
+    nombre_pais = request.form.get("nombre_pais")
+    resultado = db_manager.buscar_temperatura_pais(nombre_pais)
+
+    if resultado:
+        return render_template("resultado.html", nombre=resultado[0], temperatura=resultado[1], timestamp=resultado[2])
+    return render_template("error.html", mensaje="No se encontraron datos de temperatura para este país.")
 
 if __name__ == "__main__":
     app.run(debug=True)
