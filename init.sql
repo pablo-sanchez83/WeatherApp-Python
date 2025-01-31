@@ -12,7 +12,7 @@ CREATE TABLE `paises` (
   `capital` varchar(255) NOT NULL,
   `region` varchar(255) NOT NULL,
   `subregion` varchar(255) NOT NULL,
-  `miembroUE` bit(1) NOT NULL,
+  `miembroNU` bit(1) NOT NULL,
   `latitud` float DEFAULT NULL,
   `longitud` float DEFAULT NULL,
   PRIMARY KEY (`idpais`)
