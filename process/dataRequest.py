@@ -1,38 +1,17 @@
 #Completo
 import json
 import requests
-import mysql.connector
+from db import DBManager
 import datetime
 import xml.etree.ElementTree as ET
 
-class WeatherAppBase():
-    def __init__(self):
-        self.base_datos = None
-        self.cursor = None
 
-    def iniciar_conexion_bd(self):
-        try:
-            self.base_datos = mysql.connector.connect(
-                        host="127.0.0.1",
-                        port="3306",
-                        user="root",
-                        password="12345",
-                        database="temperaturas"
-                    )
-            self.cursor = self.base_datos.cursor()
-            return True
-        except mysql.connector.Error as error:
-            print("Error al conectar a la base de datos: ", error)
-            return False
-
-    def cerrar_conexion_bd(self):
-        if self.cursor:
-            self.cursor.close()
-        if self.base_datos:
-            self.base_datos.close()
-
-    def extraer_datos_paises(self, lista_paises):
+class WeatherAppDataRequest():
+    def extraer_paises(self):
         datos_extraidos = []
+
+        respuesta = requests.get("https://restcountries.com/v3.1/region/europe")
+        respuesta.raise_for_status()
 
         for pais in lista_paises:
             nombre = pais.get("name", {}).get("common", "Desconocido")
@@ -214,8 +193,7 @@ class WeatherAppBase():
             self.cerrar_conexion_bd()
     def run(self):
         try:
-            respuesta = requests.get("https://restcountries.com/v3.1/region/europe")
-            respuesta.raise_for_status()
+            
             lista_paises = respuesta.json()
 
             pais_id_map = self.enviar_paises_bd(lista_paises)
@@ -226,5 +204,5 @@ class WeatherAppBase():
             print("Error al obtener los datos de paises: ", error)
 
 if __name__ == "__main__":
-    proceso = ProcesoCompleto()
+    proceso = WeatherAppBase()
     proceso.run()
