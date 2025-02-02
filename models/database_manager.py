@@ -6,10 +6,12 @@ import requests
 
 class DBManager:
     def __init__(self):
+        """ Inicializa la conexión a la base de datos y crea un cursor. """
         self.conexion = mysql.connector.connect(**DB_CONFIG)
         self.cursor = self.conexion.cursor()
 
     def cerrar_conexion_bd(self):
+        """ Cierra el cursor y la conexión a la base de datos. """
         self.cursor.close()
         self.conexion.close()
 
@@ -23,6 +25,7 @@ class DBManager:
         return count > 0
     
     def borrar_tabla_temperaturas(self):
+        """ Borra todos los registros de la tabla temperaturas. """
         if not self.conexion.is_connected():
                 self.conexion = mysql.connector.connect(**DB_CONFIG)
                 self.cursor = self.conexion.cursor()
@@ -30,6 +33,7 @@ class DBManager:
         self.conexion.commit()
 
     def borrar_tabla_fronteras(self):
+        """ Borra todos los registros de la tabla fronteras. """
         if not self.conexion.is_connected():
                 self.conexion = mysql.connector.connect(**DB_CONFIG)
                 self.cursor = self.conexion.cursor()
@@ -37,6 +41,7 @@ class DBManager:
         self.conexion.commit()
 
     def borrar_tabla_paises(self):
+        """ Borra todos los registros de la tabla paises. """
         if not self.conexion.is_connected():
                 self.conexion = mysql.connector.connect(**DB_CONFIG)
                 self.cursor = self.conexion.cursor()
@@ -44,6 +49,7 @@ class DBManager:
         self.conexion.commit()
 
     def reiniciar_autoincrementos(self):
+        """ Reinicia los valores de autoincremento de las tablas. """
         if not self.conexion.is_connected():
                 self.conexion = mysql.connector.connect(**DB_CONFIG)
                 self.cursor = self.conexion.cursor()
@@ -236,6 +242,7 @@ class DBManager:
         except mysql.connector.Error as error:
             print("Error al buscar las temperaturas:", error)
             return None
+
     def buscar_temperaturas_fronteras(self, nombre_pais):
         """ Devuelve las temperaturas de todos los países que hacen frontera con el país dado. """
         try:
