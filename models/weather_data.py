@@ -15,8 +15,11 @@ class WeatherAppDataRequest:
                 "Subregión": pais.get("subregion", "Desconocida"),
                 "Código cca2": pais.get("cca2", "N/A"),
                 "Código cca3": pais.get("cca3", "N/A"),
-                "Pertenece a las NU": 1 if pais.get("region") == "Europe" and "Europe" in pais.get("subregion") and "EUR" in pais.get("currencies") else 0,
+                "Pertenece a las NU": pais.get("unMember", False),
                 "Latitud": pais.get("latlng", [0, 0])[0],
-                "Longitud": pais.get("latlng", [0, 0])[1]
+                "Longitud": pais.get("latlng", [0, 0])[1],
+                "lat_cap": pais.get("capitalInfo.latlng", [0, 0])[0],
+                "lon_cap": pais.get("capitalInfo.latlng", [0, 0])[1],
+                "borders": pais.get("borders", []),
             })
         return datos_extraidos

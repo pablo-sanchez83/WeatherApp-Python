@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql-weather
+    container_name: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 12345
@@ -13,14 +13,3 @@ services:
       - ./data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     command: --default-authentication-plugin=mysql_native_password
-  flask-app:
-    build: .
-    container_name: flask-weather
-    restart: always
-    depends_on:
-      - mysql
-    ports:
-      - "5000:5000"
-    volumes:
-      - .:/app
-    command: flask run --host=0.0.0.0 --port=5000

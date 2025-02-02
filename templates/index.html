@@ -11,12 +11,22 @@
         <button type="submit">Insertar Países</button>
     </form>
 
+    <form action="/insertar_fronteras" method="post">
+        <button type="submit">Insertar Fronteras</button>
+    </form>
+
     <form action="/insertar_temperaturas" method="post">
         <button type="submit">Insertar Temperaturas</button>
     </form>
 
     <h2>Buscar Temperatura de un País</h2>
     <form action="/buscar_pais" method="post">
+        <input type="text" name="nombre_pais" placeholder="Ingrese el nombre del país" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Buscar Temperatura de las fronteras de un País</h2>
+    <form action="/buscar_fronteras" method="post">
         <input type="text" name="nombre_pais" placeholder="Ingrese el nombre del país" required>
         <button type="submit">Buscar</button>
     </form>

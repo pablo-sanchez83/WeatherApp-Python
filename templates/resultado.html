@@ -2,14 +2,85 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Resultado de Búsqueda</title>
+    <title>Temperatura del País</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 30px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Resultado de la Búsqueda</h1>
-    <p><strong>País:</strong> {{ nombre }}</p>
-    <p><strong>Temperatura:</strong> {{ temperatura }} °C</p>
-    <p><strong>Última actualización:</strong> {{ timestamp }}</p>
+    <div class="container">
+        <h1>Temperaturas Registradas para {{ nombre_pais }}</h1>
 
-    <a href="/">Volver a la página principal</a>
+        {% if temperaturas %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                        <th>Temperatura (°C)</th>
+                        <th>Sensación (°C)</th>
+                        <th>Mínima (°C)</th>
+                        <th>Máxima (°C)</th>
+                        <th>Humedad (%)</th>
+                        <th>Amanecer</th>
+                        <th>Atardecer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for temp in temperaturas %}
+                        <tr>
+                            <td>{{ temp.timestamp }}</td>
+                            <td>{{ temp.temperatura }}</td>
+                            <td>{{ temp.sensacion }}</td>
+                            <td>{{ temp.minima }}</td>
+                            <td>{{ temp.maxima }}</td>
+                            <td>{{ temp.humedad }}</td>
+                            <td>{{ temp.amanecer }}</td>
+                            <td>{{ temp.atardecer }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay registros de temperatura para este país.</p>
+        {% endif %}
+
+        <a href="/">Volver a la página principal</a>
+    </div>
 </body>
 </html>
