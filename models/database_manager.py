@@ -21,6 +21,36 @@ class DBManager:
         self.cursor.execute("SELECT COUNT(*) FROM paises")
         count = self.cursor.fetchone()[0]
         return count > 0
+    
+    def borrar_tabla_temperaturas(self):
+        if not self.conexion.is_connected():
+                self.conexion = mysql.connector.connect(**DB_CONFIG)
+                self.cursor = self.conexion.cursor()
+        self.cursor.execute("DELETE FROM temperaturas")
+        self.conexion.commit()
+
+    def borrar_tabla_fronteras(self):
+        if not self.conexion.is_connected():
+                self.conexion = mysql.connector.connect(**DB_CONFIG)
+                self.cursor = self.conexion.cursor()
+        self.cursor.execute("DELETE FROM fronteras")
+        self.conexion.commit()
+
+    def borrar_tabla_paises(self):
+        if not self.conexion.is_connected():
+                self.conexion = mysql.connector.connect(**DB_CONFIG)
+                self.cursor = self.conexion.cursor()
+        self.cursor.execute("DELETE FROM paises")
+        self.conexion.commit()
+
+    def reiniciar_autoincrementos(self):
+        if not self.conexion.is_connected():
+                self.conexion = mysql.connector.connect(**DB_CONFIG)
+                self.cursor = self.conexion.cursor()
+        self.cursor.execute("ALTER TABLE temperaturas AUTO_INCREMENT = 1")
+        self.cursor.execute("ALTER TABLE fronteras AUTO_INCREMENT = 1")
+        self.cursor.execute("ALTER TABLE paises AUTO_INCREMENT = 1")
+        self.conexion.commit()
 
     def fronteras_existen(self):
         """ Verifica si hay fronteras en la base de datos. """
@@ -36,7 +66,8 @@ class DBManager:
         if self.paises_existen():
             return False  # Evita la inserción duplicada
         try:
-            if not self.cursor:
+            if not self.conexion.is_connected():
+                self.conexion = mysql.connector.connect(**DB_CONFIG)
                 self.cursor = self.conexion.cursor()
             for dato in datos_paises:
                 sql = "INSERT INTO paises (nombre, capital, region, subregion, cca2, cca3, miembroNU, latitud, longitud) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -87,7 +118,8 @@ class DBManager:
     def insertar_temperaturas(self, lista_paises):
         """ Inserta temperaturas en la base de datos (pueden insertarse múltiples veces). """
         try:
-            if not self.cursor:
+            if not self.conexion.is_connected():
+                self.conexion = mysql.connector.connect(**DB_CONFIG)
                 self.cursor = self.conexion.cursor()
             mitad_paises = len(lista_paises) // 2
             json_temperaturas = lista_paises[:mitad_paises]

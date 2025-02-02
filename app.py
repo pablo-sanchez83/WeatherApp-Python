@@ -10,19 +10,12 @@ weather_data = WeatherAppDataRequest()
 def index():
     return render_template("index.html")
 
-@app.route("/insertar_paises", methods=["POST"])
+@app.route("/insertar_paises_fronteras", methods=["POST"])
 def insertar_paises():
     lista_paises = weather_data.extraer_paises()
-    if db_manager.insertar_paises(lista_paises):
-        return render_template("success.html", mensaje="Países insertados correctamente.")
-    return render_template("error.html", mensaje="Los países ya han sido insertados.")
-
-@app.route("/insertar_fronteras", methods=["POST"])
-def insertar_fronteras():
-    lista_paises = weather_data.extraer_paises()
-    if db_manager.insertar_fronteras(lista_paises):
-        return render_template("success.html", mensaje="Fronteras insertados correctamente.")
-    return render_template("error.html", mensaje="Las fronteras ya han sido insertadas.")
+    if db_manager.insertar_paises(lista_paises) and db_manager.insertar_fronteras(lista_paises):
+        return render_template("success.html", mensaje="Países y fronteras insertados correctamente.")
+    return render_template("error.html", mensaje="Los países o las fronteras ya han sido insertados.")
 
 @app.route("/insertar_temperaturas", methods=["POST"])
 def insertar_temperaturas():
@@ -55,6 +48,21 @@ def buscar_fronteras():
     db_manager.cerrar_conexion_bd()
     return render_template("error.html", mensaje="No se encontraron temperaturas para los países fronterizos de " + nombre_pais)
 
+@app.route("/borrar_datos", methods=["POST"])
+def borrar_datos():
+    try:
+        # Borrar todas las tablas
+        db_manager.borrar_tabla_temperaturas()
+        db_manager.borrar_tabla_fronteras()
+        db_manager.borrar_tabla_paises()
+        
+        # Reiniciar los autoincrementos si es necesario (depende de tu DB)
+        db_manager.reiniciar_autoincrementos()
+        
+        return render_template("success.html", mensaje="Base de datos borrada correctamente.")
+    except Exception as e:
+        print(f"Error al borrar la base de datos: {str(e)}")
+        return render_template("error.html", mensaje="Ocurrió un error al intentar borrar la base de datos.")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -2,44 +2,112 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temperaturas de Países Fronterizos</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            text-align: center;
-            padding: 30px;
+            background-color: #f0f2f5;
+            padding: 2rem 1rem;
+            min-height: 100vh;
         }
+
         .container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 2rem;
         }
+
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
+
         th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
         }
+
         th {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
             color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
-        a {
-            display: block;
-            margin-top: 20px;
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: #1a73e8;
+            color: white;
+            border-radius: 6px;
             text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
+            transition: background 0.3s;
+            margin-top: 1.5rem;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .back-link:hover {
+            background: #1557b0;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            th, td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -79,10 +147,12 @@
                 </tbody>
             </table>
         {% else %}
-            <p>No hay registros de temperatura para los países fronterizos de {{ nombre_pais }}.</p>
+            <div class="no-data">
+                <p>No hay registros de temperatura para los países fronterizos de {{ nombre_pais }}.</p>
+            </div>
         {% endif %}
 
-        <a href="/">Volver a la página principal</a>
+        <a href="/" class="back-link">← Volver a la página principal</a>
     </div>
 </body>
 </html>
