@@ -12,7 +12,7 @@ La aplicación está diseñada para mostrar información sobre el clima, como te
 
 ## **Técnologías Empleado**
 
-- ** Motores:**
+- **Motores:**
   - **Científicos:** Python
   - **Lanzamiento:** Docker
   - **Base de Datos:** MySQL
