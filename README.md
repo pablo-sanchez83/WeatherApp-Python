@@ -33,6 +33,7 @@ La aplicación está diseñada para mostrar información sobre el clima, como te
    Abre una terminal y ejecuta:  
    ```bash
    cd direccion_proyecto
+   docker compose up -d
    python -m venv venv
    ./venv/Scripts/activate 
    ```
